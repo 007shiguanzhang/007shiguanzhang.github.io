@@ -303,8 +303,11 @@
       
         
           
-            <p>=================</p>
-<h2 id="gt-夹杂着各种心酸血泪史的回忆过程中-打算先按照时间顺序来说明项目的经过，然后再进行技术上的总结。"><a href="#gt-夹杂着各种心酸血泪史的回忆过程中-打算先按照时间顺序来说明项目的经过，然后再进行技术上的总结。" class="headerlink" title=" &gt; 夹杂着各种心酸血泪史的回忆过程中,打算先按照时间顺序来说明项目的经过，然后再进行技术上的总结。"></a> &gt; 夹杂着各种心酸血泪史的回忆过程中,打算先按照时间顺序来说明项目的经过，然后再进行技术上的总结。</h2><h2 id="事件定义"><a href="#事件定义" class="headerlink" title="  ##事件定义"></a>  ##事件定义</h2><p>&emsp; &emsp;在开始bb之前，先来大致说一下事件抽取的背景好了。<del>还不是因为老师拍脑袋想出来的策略，需要我来把甲方忽悠住</del></p>
+            <blockquote>
+<p>夹杂着各种心酸血泪史的回忆过程中,打算先按照时间顺序来说明项目的经过，然后再进行技术上的总结。</p>
+</blockquote>
+<hr>
+<h2 id="事件定义"><a href="#事件定义" class="headerlink" title="  事件定义"></a>  事件定义</h2><p>&emsp; &emsp;在开始bb之前，先来大致说一下事件抽取的背景好了。<del>还不是因为老师拍脑袋想出来的策略，需要我来把甲方忽悠住</del></p>
 <p>事件抽取任务的定义:</p>
 <blockquote>
 <p>&emsp; &emsp; 事件抽取领域从上世纪80年代的开始发展,其主要的评测会议为:MUC和ACE。相比之下，MUC会议主要针对某一特定领域或者场景，基于预先定义好的模板进行识别。在MUC会议停办之后出现了ACE(Automatic Content Extraction)会议，并且    ACE更偏重于自动抽取语料中的实体，关系和事件等内容。<br>&emsp; &emsp;根据ACE会议对事件定义：事件被分为8个类型和33个事件子类型(每种事件类别对应唯一的事件元素模板)。事件由事件触发词(Trigger)和描述事件结构的元素(Argument)构成.由触发词（Trigger）决定事件类别，进而确定事件模板中的元素进行抽取。如:”毛泽东1893年出生于湖南湘潭。”由“出生”为该事件的触发词，所触发的事件类型为Life,对应的子类别是Be—Born。原文中事件的3个组成元素为“毛泽东”，“1893年”和“湖南湘潭”，对应事件子类别模板的元素标签为：Person,Time和Place。</p>
@@ -320,210 +323,11 @@
 </blockquote>
 <p>嘛毕竟是拍脑袋想出来的，可行性和完备性其实并不是特别好，但是对吧毕竟大佬们想出来的……..瞎bb可能就需要我来提方案了，所以当然是选择听大佬的了。</p>
 <hr>
-<h2 id="事件标注"><a href="#事件标注" class="headerlink" title="##事件标注"></a>##事件标注</h2><p> &emsp; &emsp; 既然事件的定义以及后续的技术方案都已经确定好了之后，当然是开始干活啊！！！全身心地打杂，人工智能人工做。<br> &emsp; &emsp; 不得不说的是在李哥也参与进来干活的时候，干活效率是真的高，我拍了拍脑袋，想到了依存句法分析这个貌似可行的支线剧情，抽取依存关系为主谓宾的句中成分以及按照原文顺寻排序抽取成分然后李哥自己就给用树结构给撸出了可行的代码实现。这个过程还是深深地刺痛了在下的小心思，毕竟idea有了但是工程能力不足就很想骂人以及很容易被骂了。所以决心提高自己的工程能力从刷算法题开始。</p>
+<h2 id="事件标注"><a href="#事件标注" class="headerlink" title="事件标注"></a>事件标注</h2><p> &emsp; &emsp; 既然事件的定义以及后续的技术方案都已经确定好了之后，当然是开始干活啊！！！全身心地打杂，人工智能人工做。<br> &emsp; &emsp; 不得不说的是在李哥也参与进来干活的时候，干活效率是真的高，我拍了拍脑袋，想到了依存句法分析这个貌似可行的支线剧情，抽取依存关系为主谓宾的句中成分以及按照原文顺寻排序抽取成分然后李哥自己就给用树结构给撸出了可行的代码实现。这个过程还是深深地刺痛了在下的小心思，毕竟idea有了但是工程能力不足就很想骂人以及很容易被骂了。所以决心提高自己的工程能力从刷算法题开始。</p>
 <hr>
-<h2 id="模型及代码"><a href="#模型及代码" class="headerlink" title="##模型及代码 "></a>##模型及代码 </h2><p> &emsp; &emsp; 由于模型仍然是采用Bi-LSTM+CRF 的标注模型并且预处理之后的结果也是相同，所以不重复叙述了，具体的可以参照<a href="https://007shiguanzhang.github.io/2017/10/31/%E5%AE%9E%E4%BD%93%E6%8A%BD%E5%8F%96%E6%80%BB%E7%BB%93/" target="_blank" rel="external">实体抽取</a> 那篇文章<br>  &emsp; &emsp; 将实体抽取的模型运用在event extraction上，还需要将零散的成分拼凑起来。用到idea就是上面提出将零散成分按照原文顺序排序输出，这种方式肯定对于一些存在前置语法情况的句子不太友好，但是这种拼凑起来并不影响阅读，而且比较可行所以就采用这种办法。同时我们后来讨论感觉也应该支持双宾语或者双主语那种骚操作，所以后来通过嵌套if的最蠢的做法写了出来。<br>  所以详细地注释是在代码里的，这里只是对自己的sb程度做出一个体现，嗯没救的那种。<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> pred_result[i][<span class="number">1</span>] == <span class="string">"SUB"</span>:</div><div class="line">    <span class="keyword">if</span> i + <span class="number">2</span> &lt; length <span class="keyword">and</span> pred_result[i + <span class="number">1</span>][<span class="number">1</span>] == <span class="string">"PRE"</span> <span class="keyword">and</span> pred_result[i + <span class="number">2</span>][<span class="number">1</span>] == <span class="string">"OBJ"</span>:</div><div class="line">        temp = [pred_result[i][<span class="number">0</span>], pred_result[i + <span class="number">1</span>][<span class="number">0</span>], pred_result[i + <span class="number">2</span>][<span class="number">0</span>]]</div><div class="line">        <span class="keyword">if</span> i<span class="number">-1</span> &gt; <span class="number">0</span> <span class="keyword">and</span> pred_result[i<span class="number">-1</span>][<span class="number">1</span>] == <span class="string">"SUB"</span> <span class="keyword">and</span> abs(pred_result[i][<span class="number">2</span>] - pred_result[i<span class="number">-1</span>][<span class="number">2</span>] - len(pred_result[i<span class="number">-1</span>][<span class="number">0</span>])) &lt; threshold:</div><div class="line">            <span class="comment"># temp = [list(pred_result[i - 1][0])+list(pred_result[i][0]), pred_result[i + 1][0],</span></div><div class="line">            <span class="comment"># pred_result[i + 2][0]]</span></div><div class="line">            temp = [seq[pred_result[i<span class="number">-1</span>][<span class="number">2</span>]:pred_result[i][<span class="number">2</span>]+len(pred_result[i][<span class="number">0</span>])], pred_result[i + <span class="number">1</span>][<span class="number">0</span>], pred_result[i + <span class="number">2</span>][<span class="number">0</span>]]</div><div class="line">        <span class="keyword">if</span> i+<span class="number">3</span> &lt; length <span class="keyword">and</span> pred_result[i+<span class="number">3</span>][<span class="number">1</span>] == <span class="string">"OBJ"</span> <span class="keyword">and</span> abs(pred_result[i+<span class="number">3</span>][<span class="number">2</span>]-pred_result[i+<span class="number">2</span>][<span class="number">2</span>]-len(pred_result[i+<span class="number">2</span>][<span class="number">0</span>]))&lt;threshold:</div><div class="line">            <span class="comment"># temp = [pred_result[i][0], pred_result[i + 1][0], list(pred_result[i+2][0])+list(pred_result[i+3][0])]</span></div><div class="line">            temp = [pred_result[i][<span class="number">0</span>], pred_result[i + <span class="number">1</span>][<span class="number">0</span>], seq[pred_result[i+<span class="number">2</span>][<span class="number">2</span>]:pred_result[i+<span class="number">3</span>][<span class="number">2</span>]+len(pred_result[i+<span class="number">3</span>][<span class="number">0</span>])]]</div></pre></td></tr></table></figure></p>
+<h2 id="模型及代码"><a href="#模型及代码" class="headerlink" title="模型及代码 "></a>模型及代码 </h2><p> &emsp; &emsp; 由于模型仍然是采用Bi-LSTM+CRF 的标注模型并且预处理之后的结果也是相同，所以不重复叙述了，具体的可以参照<a href="https://007shiguanzhang.github.io/2017/10/31/%E5%AE%9E%E4%BD%93%E6%8A%BD%E5%8F%96%E6%80%BB%E7%BB%93/" target="_blank" rel="external">实体抽取</a> 那篇文章<br>  &emsp; &emsp; 将实体抽取的模型运用在event extraction上，还需要将零散的成分拼凑起来。用到idea就是上面提出将零散成分按照原文顺序排序输出，这种方式肯定对于一些存在前置语法情况的句子不太友好，但是这种拼凑起来并不影响阅读，而且比较可行所以就采用这种办法。同时我们后来讨论感觉也应该支持双宾语或者双主语那种骚操作，所以后来通过嵌套if的最蠢的做法写了出来。<br>  所以详细地注释是在代码里的，这里只是对自己的sb程度做出一个体现，嗯没救的那种。<br>  <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> pred_result[i][<span class="number">1</span>] == <span class="string">"SUB"</span>:</div><div class="line">    <span class="keyword">if</span> i + <span class="number">2</span> &lt; length <span class="keyword">and</span> pred_result[i + <span class="number">1</span>][<span class="number">1</span>] == <span class="string">"PRE"</span> <span class="keyword">and</span> pred_result[i + <span class="number">2</span>][<span class="number">1</span>] == <span class="string">"OBJ"</span>:</div><div class="line">        temp = [pred_result[i][<span class="number">0</span>], pred_result[i + <span class="number">1</span>][<span class="number">0</span>], pred_result[i + <span class="number">2</span>][<span class="number">0</span>]]</div><div class="line">        <span class="keyword">if</span> i<span class="number">-1</span> &gt; <span class="number">0</span> <span class="keyword">and</span> pred_result[i<span class="number">-1</span>][<span class="number">1</span>] == <span class="string">"SUB"</span> <span class="keyword">and</span> abs(pred_result[i][<span class="number">2</span>] - pred_result[i<span class="number">-1</span>][<span class="number">2</span>] - len(pred_result[i<span class="number">-1</span>][<span class="number">0</span>])) &lt; threshold:</div><div class="line">            <span class="comment"># temp = [list(pred_result[i - 1][0])+list(pred_result[i][0]), pred_result[i + 1][0],</span></div><div class="line">            <span class="comment"># pred_result[i + 2][0]]</span></div><div class="line">            temp = [seq[pred_result[i<span class="number">-1</span>][<span class="number">2</span>]:pred_result[i][<span class="number">2</span>]+len(pred_result[i][<span class="number">0</span>])], pred_result[i + <span class="number">1</span>][<span class="number">0</span>], pred_result[i + <span class="number">2</span>][<span class="number">0</span>]]</div><div class="line">        <span class="keyword">if</span> i+<span class="number">3</span> &lt; length <span class="keyword">and</span> pred_result[i+<span class="number">3</span>][<span class="number">1</span>] == <span class="string">"OBJ"</span> <span class="keyword">and</span> abs(pred_result[i+<span class="number">3</span>][<span class="number">2</span>]-pred_result[i+<span class="number">2</span>][<span class="number">2</span>]-len(pred_result[i+<span class="number">2</span>][<span class="number">0</span>]))&lt;threshold:</div><div class="line">            <span class="comment"># temp = [pred_result[i][0], pred_result[i + 1][0], list(pred_result[i+2][0])+list(pred_result[i+3][0])]</span></div><div class="line">            temp = [pred_result[i][<span class="number">0</span>], pred_result[i + <span class="number">1</span>][<span class="number">0</span>], seq[pred_result[i+<span class="number">2</span>][<span class="number">2</span>]:pred_result[i+<span class="number">3</span>][<span class="number">2</span>]+len(pred_result[i+<span class="number">3</span>][<span class="number">0</span>])]]</div></pre></td></tr></table></figure></p>
 <hr>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p> &emsp; &emsp; 做到后来就发现其实前期各种问题和坑也是避免不了的，这个锅不应该谁来背，老师也只是想推动项目正常地往下发展而已，学生也只是想学习一些有用的知识比如写代码，做模型，而不是全部的精力都用来数据标注和写脚本上。而推动项目尽快发展的方法是做数据而不是写代码，二者的追求在那个时候发生了冲突而已。<br>  &emsp; &emsp; 所以最后的结论其实是对于那种不带数据集还要求贼鸡儿多的项目能溜就溜，不能溜则端正态度。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/31/实体抽取总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="007shiguanzhang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/0.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="007shiguanzhang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/31/实体抽取总结/" itemprop="url">未命名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-31T16:21:46+08:00">
-                2017-10-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="实体抽取总结"><a href="#实体抽取总结" class="headerlink" title="实体抽取总结"></a>实体抽取总结</h1><p>总结基于Bi—LSTM和CRF的医疗实体抽取</p>
-<pre><code>在整个实体抽取的过程中,大致可分为数据输入, 构建LSTM模型, 解码输出三部分
-</code></pre><hr>
-<h2 id="数据输入"><a href="#数据输入" class="headerlink" title="数据输入"></a>数据输入</h2><p>一.  从txt文本中读取固定格式的数据，根据其格式解析即可获得原始的文本输入.即得到由文本组成的输入序列和“DIS”, “BOD”等标签组成的标记序列。</p>
-<blockquote>
-<p>数据格式为：<br>输入序列: [ [主因上腹部、腰部疼痛1天入院。] ….]<br>标记序列: [[O O B-BOD M-BOD E-BOD O B-BOD E-BOD B-BEH E-BEH O O O O O]….  ]                  </p>
-</blockquote>
-<p>二.  通过使用pandas库内建的DataFrame数据类型, 统计文本的词表和标签集合，并将原始的文本,标签转化为词表中文本对应的下标，和标签集合中对应的下标。得到输入文本序列和输出标签序列的数字表示。然后将全部病例按照0.8：0.2的比例划分为训练集和验证集</p>
-<blockquote>
-<p> 数据格式为:<br> 输入序列: [[2, 3, 5, 6, 8, 1, 10,  17, 23, 29, 15, 20, 45, 58, 0  ]….]<br> 标注序列： [[0, 0, 1, 2, 3, 0, 1, 3, 4, 6, 0, 0, 0, 0, 0] ……]</p>
-</blockquote>
-<p>三.  将不等长的每个输入/输出序列(即正常的每一句话及其对应的标签序列)通过补0的方式调整其长度是8的倍数, 然后再切分成不定数量的长度为24,滑动长度为8的子序列，将子序列作为LSTM的基本输入</p>
-<blockquote>
-<p>数据格式为：<br>输入序列：[[2, 3, 5, 6, 8, 1, 10,  17, 23, 29, 15, 20, 45, 58, 0, 0…] (补充0至长度为8的倍数)….]<br>标注序列： [[0, 0, 1, 2, 3, 0, 1, 3, 4, 6, 0, 0, 0, 0, 0, 0…] ……]</p>
-</blockquote>
-<p>四.  使用tensorflow内部自带的embedding_lookup()函数将输入序列的形状从<br>[vocab_size,  24]转化为 [embedding_size， 24], 代码实例如下:<br>在实际中embedding_size为64,<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">embedding = tf.get_variable(<span class="string">"embedding"</span>, [self.vocab_size, self.embedding_size], dtype=tf.float32)</div><div class="line">X = tf.nn.embedding_lookup(embedding, X)</div><div class="line">X = tf.cast(X,tf.float32)</div><div class="line">X = tf.reshape(X,[<span class="number">-1</span>,self.n_inputs])</div></pre></td></tr></table></figure></p>
-<hr>
-<h2 id="构建LSTM模型"><a href="#构建LSTM模型" class="headerlink" title="构建LSTM模型"></a>构建LSTM模型</h2><p> &emsp; 我们选取的网络主体为单层的Bi-LSTM，并使用全连接层来连接输入与LSTM层以及LSTM层和CRF解码层。具体的网络结构为:</p>
-<p>  &emsp; 与输入层相连的全连接层:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">X_in = tf.matmul(X, weights[<span class="string">'in'</span>]) + biases[<span class="string">'in'</span>]</div><div class="line">X_in = tf.reshape(X_in,[<span class="number">-1</span>, self.n_steps,self.n_hidden_units])</div></pre></td></tr></table></figure></p>
-<p>&emsp; LSTM层:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 使用 双向 basic LSTM Cell.</span></div><div class="line">fw_cell = tf.contrib.rnn.BasicLSTMCell(self.n_hidden_units, 	</div><div class="line">		   forget_bias=<span class="number">1.0</span>, state_is_tuple=<span class="keyword">True</span>)</div><div class="line">bw_cell = tf.contrib.rnn.BasicLSTMCell(self.n_hidden_units, </div><div class="line">		   forget_bias=<span class="number">1.0</span>, state_is_tuple=<span class="keyword">True</span>)</div><div class="line"><span class="comment"># 初始化全零 state </span></div><div class="line">fw_init_state = fw_cell.zero_state(batch_sizes, dtype=tf.float32) </div><div class="line">bw_init_state = bw_cell.zero_state(batch_sizes, dtype=tf.float32)</div><div class="line">outputs, bi_state = tf.nn.bidirectional_dynamic_rnn(</div><div class="line">	     fw_cell, bw_cell, X_in, initial_state_fw=fw_init_state,</div><div class="line">         initial_state_bw=bw_init_state, dtype=tf.float32)</div><div class="line">fw_out, bw_out = outputs</div><div class="line">outputs = tf.concat([fw_out, bw_out], axis=<span class="number">2</span>)</div><div class="line">outputs = tf.reshape(outputs, [<span class="number">-1</span>, self.n_hidden_units*<span class="number">2</span>])</div></pre></td></tr></table></figure></p>
-<p>&emsp; 与解码层相连的全连接层:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">results = tf.matmul(outputs, weights[<span class="string">'out'</span>]) + biases[<span class="string">'out'</span>]</div></pre></td></tr></table></figure></p>
-<p>&emsp; 解码层:(使用的是CRF解码，则模型的优化函数是CRF解码的最大似然概率)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">self.seq_length = tf.convert_to_tensor(self.batch_size * 		</div><div class="line">					[self.n_steps], dtype=tf.int32)</div><div class="line">self.log_likelihood, self.transition_params = \</div><div class="line"> tf.contrib.crf.crf_log_likelihood(output, y, self.seq_length)</div><div class="line">self.loss = tf.reduce_mean(-self.log_likelihood)</div><div class="line">train_op = tf.train.AdamOptimizer(self.lr).minimize(self.loss)</div></pre></td></tr></table></figure></p>
-<p>&emsp;使用CRF解码获得输出序列：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">fetches_test = [output, self.transition_params]</div><div class="line">scores, transition_params = sess.run(fetches_test, feed_dict)</div><div class="line"><span class="keyword">for</span> index, ii <span class="keyword">in</span> enumerate(scores):</div><div class="line">	viterbi_sequence, _ = tf.contrib.crf.viterbi_decode(ii, </div><div class="line">											transition_params)</div></pre></td></tr></table></figure></p>
-<p>则最后获得的<code>viterbi_sequence</code> 即为模型预测的标注序列</p>
-<hr>
-<h2 id="改进及问题"><a href="#改进及问题" class="headerlink" title="改进及问题"></a>改进及问题</h2><p>一. 在一开始使用单向的LSTM时,出现了如下的情况:</p>
-<pre><code>&gt; 复方鲜竹沥液 标注为B-TRE M-TRE M-TRE M-TRE E-TRE E-TRE
-    正确标注应为B-TRE M-TRE M-TRE M-TRE M-TRE E-TRE
-</code></pre><p>将单向的LSTM改为双向之后, 边界的情况有所改善。说明双向的LSTM模型对标注的边界处理更好<br>二.  将标注序列的字典由原来按频率统计得到变为手动设置，使其相邻间有关联，即使其<strong>有相同后缀的标签相邻</strong>，训练集和测试集的准确率和召回率均有稳定的提升</p>
-<p>三.  使用CRF层解码前后的效果对比为:</p>
-<blockquote>
-<p>入院后给予瑞格列奈降糖、复方甘草片止咳、莫沙必利增加胃动力、美洛西林抗感染、泮托拉唑钠保护胃黏膜、多索茶碱缓解支气管痉挛、呋塞米利尿、硝酸甘油扩冠等药物治疗，患者病情明显好转。</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>未引入CRF</th>
-<th>引入CRF</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>美洛西林 （614 ，617） 治疗</td>
-<td>美洛西林 （614 617） 治疗</td>
-</tr>
-<tr>
-<td>泮托拉唑钠 （622 ，626）治疗</td>
-<td>泮托拉唑钠 （622 ，626）治疗</td>
-</tr>
-<tr>
-<td>气管 （640,641)身体部位</td>
-<td>瑞格列奈降糖(589,594) 治疗</td>
-</tr>
-<tr>
-<td></td>
-<td>复方甘草片     (596     600)     治疗</td>
-</tr>
-<tr>
-<td></td>
-<td>瑞格列奈降糖     (589     594)     治疗</td>
-</tr>
-<tr>
-<td></td>
-<td>胃黏膜     (629     631)     身体部位</td>
-</tr>
-<tr>
-<td></td>
-<td>多索茶碱     633     636     治疗</td>
-</tr>
-<tr>
-<td></td>
-<td>呋塞米     645     647     治疗</td>
-</tr>
-<tr>
-<td></td>
-<td>硝酸甘油     651     654     治疗</td>
-</tr>
-</tbody>
-</table>
-<p>从上可明显看出使用CRF可以更好地识别出比较长的药名，但是这种改进并不是稳定的，在某些情况下CRF解码的结果会比</p>
 
           
         
@@ -609,7 +413,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
